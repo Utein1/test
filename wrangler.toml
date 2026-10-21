@@ -1,0 +1,31 @@
+# Cloudflare Workers configuration for 于典的个人网站
+# 文档：https://developers.cloudflare.com/workers/wrangler/configuration/
+
+name = "yudian-portfolio"
+main = "worker/index.js"
+compatibility_date = "2026-10-01"
+
+# 静态资源直接由 Cloudflare 边缘分发（public/ 目录）
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "404-page"
+
+# SQLite 数据库。先运行 `npx wrangler d1 create yudian-portfolio`，
+# 再把输出的 database_id 替换到下面。
+[[d1_databases]]
+binding = "DB"
+database_name = "yudian-portfolio"
+database_id = "00000000-0000-0000-0000-000000000000"
+
+# 后台图片上传（可选）。先运行 `npx wrangler r2 bucket create yudian-uploads`。
+[[r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "yudian-uploads"
+
+[vars]
+ADMIN_USERNAME = "admin"
+
+# 生产环境的密码请用 secret 设置，不要写在这里：
+#   npx wrangler secret put ADMIN_PASSWORD
+# 本地开发放在 .dev.vars 里（参见 .dev.vars.example）。

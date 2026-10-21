@@ -3,5 +3,14 @@ data/
 uploads/*
 !uploads/.gitkeep
 .env
+.dev.vars
 .DS_Store
 *.log
+
+# Wrangler local state (D1/R2 emulation, build cache)
+.wrangler/
+.wrangler
+
+# Local verification scaffolding
+tmp-*
+tiny.png
