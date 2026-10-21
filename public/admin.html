@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>管理后台 · 于典</title>
+  <meta name="theme-color" content="#05060d">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <div class="boot-screen" id="bootScreen">
+    <span class="brand-mark">于</span>
+    <p>正在连接控制台…</p>
+  </div>
+
+  <!-- Login -->
+  <div class="login-view" id="loginView" hidden>
+    <div class="login-brand">
+      <span class="brand-mark">于</span>
+      <span>于典 · 个人网站</span>
+    </div>
+    <div class="login-card">
+      <p class="admin-eyebrow">ADMIN CONSOLE</p>
+      <h1>回到控制台</h1>
+      <p class="login-desc">在这里修改网站上的所有内容。<br>请使用管理员账号登录。</p>
+      <form id="loginForm" class="login-form" novalidate>
+        <label class="form-field">
+          <span>用户名</span>
+          <input name="username" type="text" autocomplete="username" value="admin" required>
+        </label>
+        <label class="form-field">
+          <span>密码</span>
+          <input name="password" type="password" autocomplete="current-password" placeholder="请输入密码" required>
+        </label>
+        <p class="form-error" id="loginError" role="alert"></p>
+        <button class="btn btn-primary login-submit" type="submit">登录后台</button>
+      </form>
+      <p class="login-note">首次使用请查看服务启动日志中的账号信息，登录后建议立即修改密码。</p>
+      <a class="back-link" href="/">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
+        返回网站
+      </a>
+    </div>
+  </div>
+
+  <!-- Admin app -->
+  <div class="admin-app" id="adminApp" hidden>
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-brand">
+        <span class="brand-mark">于</span>
+        <div>
+          <p class="sidebar-name">于典<span class="brand-dot">.</span></p>
+          <p class="sidebar-sub">内容管理后台</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="后台导航">
+        <button class="side-link active" type="button" data-panel="overview">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z"/></svg>
+          <span>概览</span>
+        </button>
+        <button class="side-link" type="button" data-panel="profile">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span>个人信息</span>
+        </button>
+        <button class="side-link" type="button" data-panel="skills">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.2l5.9-.9L12 3Z"/></svg>
+          <span>技能</span>
+        </button>
+        <button class="side-link" type="button" data-panel="projects">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg>
+          <span>项目</span>
+        </button>
+        <button class="side-link" type="button" data-panel="posts">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l5 5v13H6z"/><path d="M14 3v6h6M9 13h6M9 17h6"/></svg>
+          <span>博客文章</span>
+        </button>
+        <button class="side-link" type="button" data-panel="messages">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3z"/><path d="m3 6 9 7 9-7"/></svg>
+          <span>留言</span>
+          <span class="side-badge" id="sidebarUnread" hidden>0</span>
+        </button>
+        <button class="side-link" type="button" data-panel="settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.6-2-3.4-2.4 1a7 7 0 0 0-1.8-1L14.4 3h-4l-.3 2.9a7 7 0 0 0-1.8 1l-2.4-1-2 3.4L6 11a7 7 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.8 1l.3 2.9h4l.3-2.9a7 7 0 0 0 1.8-1l2.4 1 2-3.4L19 13a7 7 0 0 0 .1-1Z"/></svg>
+          <span>设置</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <a class="side-link" href="/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M10 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/></svg>
+          <span>查看网站</span>
+        </a>
+        <button class="side-link side-link--danger" type="button" id="logoutButton">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          <span>退出登录</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="sidebar-scrim" id="sidebarScrim" hidden></div>
+
+    <div class="admin-main">
+      <header class="admin-topbar">
+        <div class="topbar-heading">
+          <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="展开菜单">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <div>
+            <p class="admin-eyebrow">CONTENT STUDIO</p>
+            <h1 id="panelTitle">概览</h1>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <a class="btn btn-small btn-ghost" href="/" target="_blank" rel="noopener">查看网站 ↗</a>
+          <span class="admin-user" id="adminUser">admin</span>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <!-- Overview -->
+        <section class="panel" id="panel-overview">
+          <div class="stat-grid">
+            <article class="stat-card">
+              <span class="stat-icon stat-icon--cyan">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.2l5.9-.9L12 3Z"/></svg>
+              </span>
+              <div>
+                <p class="stat-label">技能</p>
+                <p class="stat-value" data-stat="skills">—</p>
+              </div>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon stat-icon--violet">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg>
+              </span>
+              <div>
+                <p class="stat-label">项目</p>
+                <p class="stat-value" data-stat="projects">—</p>
+              </div>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon stat-icon--blue">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l5 5v13H6z"/><path d="M14 3v6h6"/></svg>
+              </span>
+              <div>
+                <p class="stat-label">已发布文章</p>
+                <p class="stat-value" data-stat="published">—</p>
+              </div>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon stat-icon--pink">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3z"/><path d="m3 6 9 7 9-7"/></svg>
+              </span>
+              <div>
+                <p class="stat-label">未读留言</p>
+                <p class="stat-value" data-stat="unread">—</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="overview-grid">
+            <article class="admin-card">
+              <header class="card-head">
+                <h2>最近文章</h2>
+                <button class="text-button" type="button" data-goto="posts">全部文章 →</button>
+              </header>
+              <div class="mini-list" id="overviewPosts"></div>
+            </article>
+            <article class="admin-card">
+              <header class="card-head">
+                <h2>最新留言</h2>
+                <button class="text-button" type="button" data-goto="messages">全部留言 →</button>
+              </header>
+              <div class="mini-list" id="overviewMessages"></div>
+            </article>
+          </div>
+
+          <article class="admin-card quick-card">
+            <header class="card-head">
+              <h2>快速开始</h2>
+            </header>
+            <div class="quick-actions">
+              <button type="button" class="quick-action" data-quick="post">
+                <span class="quick-icon">✎</span>
+                <span><strong>写一篇文章</strong><small>记录最近的想法</small></span>
+              </button>
+              <button type="button" class="quick-action" data-quick="project">
+                <span class="quick-icon">◇</span>
+                <span><strong>添加项目</strong><small>展示新的作品</small></span>
+              </button>
+              <button type="button" class="quick-action" data-quick="profile">
+                <span class="quick-icon">◉</span>
+                <span><strong>更新个人信息</strong><small>头像、简介与链接</small></span>
+              </button>
+            </div>
+          </article>
+        </section>
+
+        <!-- Profile -->
+        <section class="panel" id="panel-profile" hidden>
+          <form id="profileForm">
+            <article class="admin-card">
+              <header class="card-head">
+                <div>
+                  <h2>基本信息</h2>
+                  <p class="card-desc">这些内容会显示在网站首页与「关于我」区域。</p>
+                </div>
+              </header>
+
+              <div class="avatar-editor">
+                <div class="avatar-preview" id="avatarPreview">
+                  <img src="/assets/avatar.svg" alt="头像预览">
+                </div>
+                <div class="avatar-editor-info">
+                  <p class="field-title">头像</p>
+                  <p class="field-help">建议使用正方形图片，支持 PNG / JPG / WebP / GIF，最大 8MB。</p>
+                  <div class="inline-actions">
+                    <button class="btn btn-small btn-ghost" type="button" id="avatarUploadBtn">上传图片</button>
+                    <input type="file" id="avatarFile" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <label class="form-field">
+                  <span>姓名</span>
+                  <input name="name" type="text" maxlength="40" required>
+                </label>
+                <label class="form-field">
+                  <span>身份 / 职位</span>
+                  <input name="role" type="text" maxlength="80" placeholder="例如：全栈开发者">
+                </label>
+                <label class="form-field">
+                  <span>所在地</span>
+                  <input name="location" type="text" maxlength="60" placeholder="例如：中国 · 远程">
+                </label>
+                <label class="form-field">
+                  <span>当前状态</span>
+                  <input name="status" type="text" maxlength="40" placeholder="例如：开放合作中">
+                </label>
+                <label class="form-field">
+                  <span>联系邮箱</span>
+                  <input name="email" type="email" maxlength="120" placeholder="you@example.com">
+                </label>
+                <label class="form-field">
+                  <span>简历链接 <em>选填</em></span>
+                  <input name="resume_url" type="text" maxlength="600" placeholder="https://… 或 /uploads/…">
+                </label>
+                <label class="form-field form-field--full">
+                  <span>一句话介绍</span>
+                  <input name="tagline" type="text" maxlength="200" placeholder="显示在姓名下方">
+                </label>
+                <label class="form-field form-field--full">
+                  <span>头像地址</span>
+                  <input name="avatar_url" id="avatarUrl" type="text" maxlength="600" placeholder="/assets/avatar.svg">
+                </label>
+                <label class="form-field form-field--full">
+                  <span>个人介绍 <em>支持 Markdown</em></span>
+                  <textarea name="bio" rows="9" maxlength="4000"></textarea>
+                </label>
+              </div>
+            </article>
+
+            <article class="admin-card">
+              <header class="card-head">
+                <div>
+                  <h2>社交链接</h2>
+                  <p class="card-desc">最多 8 个，显示在卡片、关于我和联系区域。链接需以 https://、mailto: 或 / 开头。</p>
+                </div>
+                <button class="btn btn-small btn-ghost" type="button" id="addSocialBtn">+ 添加链接</button>
+              </header>
+              <div class="social-editor" id="socialEditor"></div>
+            </article>
+
+            <div class="save-bar">
+              <p class="save-hint">修改后记得保存，前台会立即更新。</p>
+              <button class="btn btn-primary" type="submit">保存个人信息</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Skills -->
+        <section class="panel" id="panel-skills" hidden>
+          <article class="admin-card">
+            <header class="card-head">
+              <div>
+                <h2>技能列表</h2>
+                <p class="card-desc" id="skillsSummary">按分类分组展示，可调整顺序。</p>
+              </div>
+              <button class="btn btn-small btn-primary" type="button" id="addSkillBtn">+ 新增技能</button>
+            </header>
+            <div class="admin-list" id="skillsAdminList"></div>
+          </article>
+        </section>
+
+        <!-- Projects -->
+        <section class="panel" id="panel-projects" hidden>
+          <article class="admin-card">
+            <header class="card-head">
+              <div>
+                <h2>项目列表</h2>
+                <p class="card-desc">「精选」项目会以横向大卡片显示在项目区顶部。</p>
+              </div>
+              <button class="btn btn-small btn-primary" type="button" id="addProjectBtn">+ 新增项目</button>
+            </header>
+            <div class="admin-list" id="projectsAdminList"></div>
+          </article>
+        </section>
+
+        <!-- Posts -->
+        <section class="panel" id="panel-posts" hidden>
+          <article class="admin-card">
+            <header class="card-head">
+              <div>
+                <h2>博客文章</h2>
+                <p class="card-desc" id="postsSummary">支持 Markdown，草稿只有登录后台后才能看到。</p>
+              </div>
+              <button class="btn btn-small btn-primary" type="button" id="addPostBtn">+ 写文章</button>
+            </header>
+            <div class="admin-list admin-list--posts" id="postsAdminList"></div>
+          </article>
+        </section>
+
+        <!-- Messages -->
+        <section class="panel" id="panel-messages" hidden>
+          <article class="admin-card">
+            <header class="card-head">
+              <div>
+                <h2>留言收件箱</h2>
+                <p class="card-desc">来自网站联系表单的消息，最多保留最近 200 条。</p>
+              </div>
+              <span class="count-pill" id="messagesCount">0 条</span>
+            </header>
+            <div class="admin-list" id="messagesAdminList"></div>
+          </article>
+        </section>
+
+        <!-- Settings -->
+        <section class="panel" id="panel-settings" hidden>
+          <div class="settings-grid">
+            <article class="admin-card">
+              <header class="card-head">
+                <div>
+                  <h2>账号信息</h2>
+                  <p class="card-desc">当前登录的管理员账号。</p>
+                </div>
+              </header>
+              <div class="readout">
+                <span>用户名</span>
+                <strong id="settingsUsername">admin</strong>
+              </div>
+              <div class="readout">
+                <span>密码状态</span>
+                <strong>已设置 · 建议定期更换</strong>
+              </div>
+            </article>
+
+            <article class="admin-card">
+              <header class="card-head">
+                <div>
+                  <h2>修改密码</h2>
+                  <p class="card-desc">修改后，其他已登录的会话会被强制下线。</p>
+                </div>
+              </header>
+              <form id="passwordForm" class="form-grid">
+                <label class="form-field form-field--full">
+                  <span>当前密码</span>
+                  <input name="current" type="password" autocomplete="current-password" required>
+                </label>
+                <label class="form-field form-field--full">
+                  <span>新密码 <em>至少 8 位</em></span>
+                  <input name="next" type="password" minlength="8" autocomplete="new-password" required>
+                </label>
+                <label class="form-field form-field--full">
+                  <span>确认新密码</span>
+                  <input name="confirm" type="password" minlength="8" autocomplete="new-password" required>
+                </label>
+                <div class="form-field--full">
+                  <button class="btn btn-primary" type="submit">更新密码</button>
+                </div>
+              </form>
+            </article>
+
+            <article class="admin-card">
+              <header class="card-head">
+                <div>
+                  <h2>数据备份</h2>
+                  <p class="card-desc">导出个人信息、技能、项目、文章与留言的 JSON 备份。</p>
+                </div>
+              </header>
+              <a class="btn btn-ghost" href="/api/admin/export" download>下载数据备份</a>
+              <p class="field-help">数据库文件位于 data/portfolio.db，图片位于 uploads/ 目录。</p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skill dialog -->
+  <dialog class="modal" id="skillDialog">
+    <form id="skillForm">
+      <div class="modal-head">
+        <h2 id="skillDialogTitle">新增技能</h2>
+        <button class="modal-close" type="button" data-close aria-label="关闭">×</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" name="id">
+        <div class="form-grid">
+          <label class="form-field">
+            <span>分类</span>
+            <input name="category" type="text" list="categoryOptions" maxlength="24" placeholder="例如：前端" required>
+            <datalist id="categoryOptions"></datalist>
+          </label>
+          <label class="form-field">
+            <span>技能名称</span>
+            <input name="name" type="text" maxlength="40" placeholder="例如：JavaScript" required>
+          </label>
+          <label class="form-field form-field--full">
+            <span>熟练度 <output id="skillLevelOut">80%</output></span>
+            <input name="level" id="skillLevel" type="range" min="0" max="100" step="1" value="80">
+          </label>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-ghost" type="button" data-close>取消</button>
+        <button class="btn btn-primary" type="submit">保存技能</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Project dialog -->
+  <dialog class="modal modal--wide" id="projectDialog">
+    <form id="projectForm">
+      <div class="modal-head">
+        <h2 id="projectDialogTitle">新增项目</h2>
+        <button class="modal-close" type="button" data-close aria-label="关闭">×</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" name="id">
+        <div class="form-grid">
+          <label class="form-field">
+            <span>项目名称</span>
+            <input name="title" type="text" maxlength="80" required>
+          </label>
+          <label class="form-field">
+            <span>年份</span>
+            <input name="year" type="text" maxlength="12" placeholder="2026">
+          </label>
+          <label class="form-field form-field--full">
+            <span>一句话简介</span>
+            <textarea name="summary" rows="2" maxlength="300" placeholder="显示在项目卡片上"></textarea>
+          </label>
+          <label class="form-field">
+            <span>技术栈 <em>逗号分隔</em></span>
+            <input name="tech" type="text" placeholder="Node.js, SQLite, Canvas">
+          </label>
+          <label class="form-field checkbox-field">
+            <input name="featured" type="checkbox">
+            <span>设为精选项目（大卡片展示）</span>
+          </label>
+          <div class="form-field form-field--full">
+            <span>项目封面</span>
+            <div class="cover-editor">
+              <div class="cover-preview" id="projectCoverPreview"></div>
+              <div class="cover-fields">
+                <input name="cover_url" id="projectCoverUrl" type="text" maxlength="600" placeholder="/assets/covers/orbit.svg 或粘贴图片地址">
+                <button class="btn btn-small btn-ghost" type="button" id="projectCoverBtn">上传图片</button>
+                <input type="file" id="projectCoverFile" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+              </div>
+            </div>
+          </div>
+          <label class="form-field">
+            <span>演示地址 <em>选填</em></span>
+            <input name="demo_url" type="text" maxlength="600" placeholder="https://…">
+          </label>
+          <label class="form-field">
+            <span>源码地址 <em>选填</em></span>
+            <input name="repo_url" type="text" maxlength="600" placeholder="https://…">
+          </label>
+          <label class="form-field form-field--full">
+            <span>项目详情 <em>支持 Markdown</em></span>
+            <textarea name="description" rows="5" maxlength="10000"></textarea>
+          </label>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-ghost" type="button" data-close>取消</button>
+        <button class="btn btn-primary" type="submit">保存项目</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Post dialog -->
+  <dialog class="modal modal--wide modal--editor" id="postDialog">
+    <form id="postForm">
+      <div class="modal-head">
+        <h2 id="postDialogTitle">写文章</h2>
+        <button class="modal-close" type="button" data-close aria-label="关闭">×</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" name="id">
+        <div class="form-grid">
+          <label class="form-field form-field--full">
+            <span>标题</span>
+            <input name="title" type="text" maxlength="160" required>
+          </label>
+          <label class="form-field">
+            <span>链接标识 <em>留空自动生成</em></span>
+            <input name="slug" type="text" maxlength="80" placeholder="hello-world">
+          </label>
+          <label class="form-field">
+            <span>发布日期</span>
+            <input name="date" type="date">
+          </label>
+          <label class="form-field form-field--full">
+            <span>摘要</span>
+            <textarea name="excerpt" rows="2" maxlength="300" placeholder="显示在文章卡片与文章开头"></textarea>
+          </label>
+          <label class="form-field">
+            <span>标签 <em>逗号分隔</em></span>
+            <input name="tags" type="text" placeholder="前端, Canvas">
+          </label>
+          <label class="form-field checkbox-field">
+            <input name="published" type="checkbox">
+            <span>发布到网站</span>
+          </label>
+          <div class="form-field form-field--full">
+            <span>文章封面 <em>选填</em></span>
+            <div class="cover-editor">
+              <div class="cover-preview" id="postCoverPreview"></div>
+              <div class="cover-fields">
+                <input name="cover_url" id="postCoverUrl" type="text" maxlength="600" placeholder="粘贴图片地址或上传">
+                <button class="btn btn-small btn-ghost" type="button" id="postCoverBtn">上传图片</button>
+                <input type="file" id="postCoverFile" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+              </div>
+            </div>
+          </div>
+          <div class="form-field form-field--full">
+            <span>正文 <em>支持 Markdown</em></span>
+            <div class="editor">
+              <div class="editor-tabs">
+                <button class="editor-tab active" type="button" data-editor-tab="write">编辑</button>
+                <button class="editor-tab" type="button" data-editor-tab="preview">预览</button>
+                <span class="editor-count" id="postWordCount">0 字</span>
+              </div>
+              <textarea name="content" id="postContent" rows="16" maxlength="200000" placeholder="从这里开始写…"></textarea>
+              <div class="prose editor-preview" id="postPreview" hidden></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-ghost" type="button" data-close>取消</button>
+        <button class="btn btn-primary" type="submit">保存文章</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>

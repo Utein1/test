@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>于典 · 个人网站</title>
+  <meta name="description" content="于典的个人网站 —— 全栈开发者，记录项目、技能与文字。">
+  <meta name="theme-color" content="#05060d">
+  <meta property="og:title" content="于典 · 个人网站">
+  <meta property="og:description" content="把想法写成能用的产品，也把夜空写进屏幕里。">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="bg-glow" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="回到首页">
+        <span class="brand-mark">于</span>
+        <span class="brand-text"><span data-profile-name>于典</span><span class="brand-dot">.</span></span>
+      </a>
+
+      <nav class="site-nav" id="siteNav" aria-label="主导航">
+        <a href="#about" data-nav="about">关于</a>
+        <a href="#skills" data-nav="skills">技能</a>
+        <a href="#projects" data-nav="projects">项目</a>
+        <a href="#blog" data-nav="blog">博客</a>
+        <a href="#contact" data-nav="contact">联系</a>
+      </nav>
+
+      <div class="header-actions">
+        <a class="btn btn-small btn-outline header-cta" href="#contact">聊聊合作</a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="siteNav">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="status-pill hero-in" style="--delay:.05s">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span data-profile-status>开放合作中</span>
+          </div>
+
+          <p class="hero-eyebrow hero-in" style="--delay:.12s">
+            <span class="eyebrow-line"></span>HELLO, I AM
+          </p>
+          <h1 class="hero-title hero-in" style="--delay:.18s">
+            <span data-profile-name>于典</span><span class="title-dot">.</span>
+          </h1>
+          <p class="hero-role hero-in" style="--delay:.26s" data-profile-role>全栈开发者 · 独立创造者</p>
+          <p class="hero-tagline hero-in" style="--delay:.34s" data-profile-tagline>
+            把想法写成能用的产品，也把夜空写进屏幕里。
+          </p>
+
+          <div class="hero-actions hero-in" style="--delay:.42s">
+            <a class="btn btn-primary" href="#projects">
+              <span>查看我的项目</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="#contact">联系我</a>
+          </div>
+
+          <dl class="hero-stats hero-in" style="--delay:.5s">
+            <div>
+              <dd data-count-skills>—</dd>
+              <dt>项技能</dt>
+            </div>
+            <div>
+              <dd data-count-projects>—</dd>
+              <dt>个项目</dt>
+            </div>
+            <div>
+              <dd data-count-posts>—</dd>
+              <dt>篇文章</dt>
+            </div>
+          </dl>
+        </div>
+
+        <aside class="hero-aside hero-in" style="--delay:.36s">
+          <div class="hero-card">
+            <div class="card-stars" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="avatar-orbit" aria-hidden="true">
+              <span class="orbit-ring"></span>
+              <span class="orbit-dot orbit-dot-a"></span>
+              <span class="orbit-dot orbit-dot-b"></span>
+            </div>
+            <div class="avatar-frame">
+              <img id="profileAvatar" src="/assets/avatar.svg" alt="于典的头像" width="176" height="176">
+            </div>
+            <div class="hero-card-body">
+              <p class="card-kicker">YU DIAN · PORTFOLIO</p>
+              <h2 class="card-name" data-profile-name>于典</h2>
+              <p class="card-role" data-profile-role>全栈开发者 · 独立创造者</p>
+              <div class="card-meta">
+                <span class="card-meta-item">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <span data-profile-location>中国 · 远程</span>
+                </span>
+                <span class="card-meta-item">
+                  <span class="mini-dot" aria-hidden="true"></span>
+                  <span data-profile-status>开放合作中</span>
+                </span>
+              </div>
+              <div class="social-row" data-socials></div>
+              <a class="resume-link" id="resumeLink" href="#" hidden>
+                下载简历
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
+              </a>
+            </div>
+          </div>
+          <p class="aside-caption">「保持好奇，保持构建。」</p>
+        </aside>
+      </div>
+
+      <a class="scroll-cue" href="#about" aria-label="向下浏览">
+        <span>SCROLL</span>
+        <i aria-hidden="true"></i>
+      </a>
+    </section>
+
+    <!-- About -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-index">01</span>
+          <div>
+            <p class="section-kicker">ABOUT ME</p>
+            <h2 class="section-title">关于我</h2>
+          </div>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-left reveal">
+            <div class="about-quote">
+              <svg class="quote-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M18 8C10 12 6 20 6 28c0 7 4 12 10 12 5 0 9-4 9-9s-4-8-8-8c1-5 4-9 8-11l-7-4Zm24 0c-8 4-12 12-12 20 0 7 4 12 10 12 5 0 9-4 9-9s-4-8-8-8c1-5 4-9 8-11l-7-4Z"/></svg>
+              <p data-profile-tagline>把想法写成能用的产品，也把夜空写进屏幕里。</p>
+            </div>
+
+            <div class="facts">
+              <div class="fact">
+                <span class="fact-label">所在地</span>
+                <span class="fact-value" data-profile-location>—</span>
+              </div>
+              <div class="fact">
+                <span class="fact-label">身份</span>
+                <span class="fact-value" data-profile-role>—</span>
+              </div>
+              <div class="fact">
+                <span class="fact-label">邮箱</span>
+                <a class="fact-value" data-profile-email href="#">—</a>
+              </div>
+              <div class="fact">
+                <span class="fact-label">状态</span>
+                <span class="fact-value fact-status"><span class="mini-dot" aria-hidden="true"></span><span data-profile-status>—</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-right reveal" style="--delay:.1s">
+            <div class="prose about-bio" data-profile-bio>
+              <p>你好，我是于典。</p>
+            </div>
+            <div class="about-actions">
+              <a class="btn btn-primary" data-profile-email href="#">
+                写信给我
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 6 8-6"/></svg>
+              </a>
+              <div class="social-row" data-socials></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section-head split reveal">
+          <div class="section-head-main">
+            <span class="section-index">02</span>
+            <div>
+              <p class="section-kicker">TOOLKIT</p>
+              <h2 class="section-title">技能与工具</h2>
+            </div>
+          </div>
+          <p class="section-note">持续学习，也持续做减法。<br>百分比为自评熟练度。</p>
+        </div>
+        <div class="skills-grid" id="skillsGrid">
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section-head split reveal">
+          <div class="section-head-main">
+            <span class="section-index">03</span>
+            <div>
+              <p class="section-kicker">SELECTED WORK</p>
+              <h2 class="section-title">项目展示</h2>
+            </div>
+          </div>
+          <p class="section-note">一些做过的东西，<br>以及背后的取舍。</p>
+        </div>
+        <div id="projectsList">
+          <div class="skeleton-block"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog -->
+    <section class="section" id="blog">
+      <div class="container">
+        <div class="section-head split reveal">
+          <div class="section-head-main">
+            <span class="section-index">04</span>
+            <div>
+              <p class="section-kicker">WRITING</p>
+              <h2 class="section-title">最近写的</h2>
+            </div>
+          </div>
+          <p class="section-note">关于代码、产品，<br>和一点无关紧要的思考。</p>
+        </div>
+        <div class="posts-grid" id="postsGrid">
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        <div class="contact-panel reveal">
+          <div class="contact-info">
+            <p class="section-kicker">GET IN TOUCH</p>
+            <h2 class="contact-title">有想法？<br><span>写信给我。</span></h2>
+            <p class="contact-desc">无论是项目合作、技术交流，还是只想打个招呼，看到都会回复。</p>
+            <a class="contact-mail" data-profile-email data-email-text href="#">hello@yudian.dev</a>
+            <div class="social-row" data-socials></div>
+          </div>
+
+          <form class="contact-form" id="contactForm" novalidate>
+            <div class="field-row">
+              <label class="field">
+                <span class="field-label">怎么称呼你</span>
+                <input type="text" name="name" maxlength="40" autocomplete="name" placeholder="你的名字" required>
+              </label>
+              <label class="field">
+                <span class="field-label">邮箱 <em>选填</em></span>
+                <input type="email" name="email" maxlength="120" autocomplete="email" placeholder="you@example.com">
+              </label>
+            </div>
+            <label class="field">
+              <span class="field-label">想说的话</span>
+              <textarea name="content" rows="5" maxlength="2000" placeholder="想聊点什么？" required></textarea>
+            </label>
+            <label class="hp-field" aria-hidden="true" tabindex="-1">
+              <span>Website</span>
+              <input type="text" name="website" tabindex="-1" autocomplete="off">
+            </label>
+            <div class="form-foot">
+              <p class="form-hint">你的留言会直接进入我的后台收件箱。</p>
+              <button class="btn btn-primary" type="submit">
+                <span>发送留言</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12 20 4l-5 16-3.5-6.5L4 12Z"/></svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark">于</span>
+        <div>
+          <p class="footer-name"><span data-profile-name>于典</span><span class="brand-dot">.</span></p>
+          <p class="footer-note">用代码和星星拼成 · <span data-year>2026</span></p>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#top">回到顶部</a>
+        <a href="#blog">全部文章</a>
+        <a href="/admin">管理后台</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Article reader -->
+  <div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="articleTitle" aria-hidden="true">
+    <div class="reader-progress" aria-hidden="true"><span id="readerProgress"></span></div>
+    <header class="reader-head">
+      <button class="reader-back" id="readerBack" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
+        <span>返回</span>
+      </button>
+      <a class="brand reader-brand" href="#" tabindex="-1">
+        <span class="brand-mark">于</span>
+        <span class="brand-text"><span data-profile-name>于典</span><span class="brand-dot">.</span></span>
+      </a>
+      <span class="reader-label">READING</span>
+    </header>
+
+    <article class="article">
+      <p class="article-meta">
+        <span data-article-date>—</span>
+        <span class="meta-sep">/</span>
+        <span data-article-time>— 分钟阅读</span>
+      </p>
+      <h1 class="article-title" id="articleTitle" data-article-title>文章</h1>
+      <p class="article-excerpt" data-article-excerpt></p>
+      <div class="article-tags" data-article-tags></div>
+      <div class="prose article-body" data-article-body>
+        <p>正在加载文章…</p>
+      </div>
+      <div class="article-foot">
+        <span class="article-star" aria-hidden="true">✦</span>
+        <p>感谢你读到这里。如果愿意，欢迎<a href="#contact" id="articleContact">和我聊聊</a>。</p>
+        <a class="btn btn-ghost" href="#blog" id="articleBack">回到博客</a>
+      </div>
+      <section class="related" id="relatedPosts" hidden>
+        <h2>继续阅读</h2>
+        <div class="related-grid"></div>
+      </section>
+    </article>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <noscript>
+    <div class="noscript">这个网站需要 JavaScript 才能加载内容，请开启后刷新。</div>
+  </noscript>
+
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

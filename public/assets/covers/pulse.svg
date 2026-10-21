@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#060b16"/>
+      <stop offset="1" stop-color="#0a1022"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#67e8f9"/>
+      <stop offset=".55" stop-color="#818cf8"/>
+      <stop offset="1" stop-color="#c084fc"/>
+    </linearGradient>
+    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#818cf8" stop-opacity=".32"/>
+      <stop offset="1" stop-color="#818cf8" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity=".4"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="24"/></filter>
+    <filter id="dotGlow"><feGaussianBlur stdDeviation="7"/></filter>
+  </defs>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <circle cx="280" cy="480" r="280" fill="url(#glow)" filter="url(#blur)" opacity=".7"/>
+
+  <g stroke="#94a3b8" stroke-opacity=".07">
+    <path d="M100 140h1000M100 260h1000M100 380h1000M100 500h1000M100 620h1000"/>
+    <path d="M220 80v560M380 80v560M540 80v560M700 80v560M860 80v560M1020 80v560"/>
+  </g>
+
+  <g fill="#e0f2fe">
+    <circle cx="140" cy="100" r="1.4" opacity=".5"/>
+    <circle cx="980" cy="120" r="1.8" opacity=".6"/>
+    <circle cx="1130" cy="330" r="1" opacity=".3"/>
+    <circle cx="80" cy="560" r="1.2" opacity=".35"/>
+  </g>
+
+  <g transform="translate(110 120)">
+    <rect width="980" height="460" rx="26" fill="#080e1c" fill-opacity=".7" stroke="#94a3b8" stroke-opacity=".1"/>
+    <circle cx="30" cy="30" r="5" fill="#fb7185" fill-opacity=".7"/>
+    <circle cx="48" cy="30" r="5" fill="#fbbf24" fill-opacity=".7"/>
+    <circle cx="66" cy="30" r="5" fill="#4ade80" fill-opacity=".7"/>
+    <rect x="840" y="19" width="110" height="22" rx="11" fill="#4ade80" fill-opacity=".08" stroke="#4ade80" stroke-opacity=".2"/>
+    <circle cx="856" cy="30" r="3.5" fill="#4ade80"/>
+    <rect x="868" y="26" width="66" height="8" rx="4" fill="#4ade80" fill-opacity=".3"/>
+
+    <g transform="translate(36 84)">
+      <rect width="180" height="12" rx="6" fill="#e2e8f0" fill-opacity=".45"/>
+      <rect y="26" width="110" height="8" rx="4" fill="#94a3b8" fill-opacity=".18"/>
+      <text x="784" y="12" fill="#67e8f9" fill-opacity=".55" font-family="monospace" font-size="13" text-anchor="end">99.98% UPTIME</text>
+    </g>
+
+    <g transform="translate(36 270)">
+      <path d="M0 90 L60 90 L80 38 L100 148 L120 66 L140 90 L210 90 L230 20 L250 160 L270 72 L292 90 L380 90 L400 42 L420 130 L440 78 L470 90 L560 90 L580 26 L600 154 L620 62 L640 90 L740 90 L760 50 L780 118 L800 84 L826 90"
+        fill="none" stroke="url(#line)" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M0 90 L60 90 L80 38 L100 148 L120 66 L140 90 L210 90 L230 20 L250 160 L270 72 L292 90 L380 90 L400 42 L420 130 L440 78 L470 90 L560 90 L580 26 L600 154 L620 62 L640 90 L740 90 L760 50 L780 118 L800 84 L826 90 L826 196 L0 196 Z" fill="url(#area)"/>
+      <circle cx="580" cy="26" r="14" fill="#818cf8" opacity=".45" filter="url(#dotGlow)"/>
+      <circle cx="580" cy="26" r="5" fill="#c7d2fe"/>
+      <circle cx="100" cy="148" r="3" fill="#67e8f9"/>
+      <circle cx="600" cy="154" r="3" fill="#67e8f9"/>
+    </g>
+
+    <g transform="translate(36 520)" fill="#94a3b8" fill-opacity=".3" font-family="monospace" font-size="11">
+      <text>00:00</text><text x="150">04:00</text><text x="300">08:00</text><text x="450">12:00</text><text x="600">16:00</text><text x="750">20:00</text><text x="900">24:00</text>
+    </g>
+  </g>
+
+  <g transform="translate(820 90)">
+    <rect width="250" height="76" rx="14" fill="#0b1324" stroke="#94a3b8" stroke-opacity=".14"/>
+    <circle cx="28" cy="28" r="6" fill="#4ade80"/>
+    <rect x="46" y="23" width="92" height="9" rx="4.5" fill="#e2e8f0" fill-opacity=".4"/>
+    <rect x="20" y="46" width="150" height="8" rx="4" fill="#94a3b8" fill-opacity=".18"/>
+    <rect x="186" y="20" width="44" height="16" rx="8" fill="#4ade80" fill-opacity=".1"/>
+  </g>
+</svg>
