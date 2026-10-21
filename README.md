@@ -4,6 +4,10 @@
 
 整站运行在 **Cloudflare Workers** 上：前端是原生 HTML / CSS / JavaScript，后端是一个 Worker 脚本，内容存在 **D1**（Cloudflare 的 SQLite），图片走静态资源目录。没有构建步骤、没有前端框架、没有第三方运行时依赖，全部能力都在 Cloudflare 免费额度内。
 
+- 需求与范围：[`PRD.md`](./PRD.md)
+- 技术设计与接口：[`TECH_DESIGN.md`](./TECH_DESIGN.md)
+- 修改约定（面向代理与协作者）：[`AGENTS.md`](./AGENTS.md)
+
 ---
 
 ## 快速开始（本地）
