@@ -3,7 +3,6 @@ import { hashPassword, randomToken, rateLimit, sha256, verifyPassword } from './
 const SESSION_COOKIE = 'yd_sid';
 const SESSION_TTL = 7 * 24 * 60 * 60 * 1000;
 const MAX_JSON_BYTES = 2 * 1024 * 1024;
-const MAX_UPLOAD_BYTES = 8 * 1024 * 1024;
 
 class HttpError extends Error {
   constructor(status, message) {
@@ -96,12 +95,6 @@ async function readJson(request) {
   } catch {
     throw new HttpError(400, '请求内容不是合法的 JSON');
   }
-}
-
-async function readBytes(request, max) {
-  const buffer = await request.arrayBuffer();
-  if (buffer.byteLength > max) throw new HttpError(413, '图片不能超过 8MB');
-  return new Uint8Array(buffer);
 }
 
 function db(env) {
@@ -461,45 +454,6 @@ async function route(request, env, url) {
     return json(200, { ok: true }, { 'Set-Cookie': clearCookie() });
   }
 
-  // ---- upload -------------------------------------------------------------
-  if (pathname === '/api/upload' && method === 'POST') {
-    await requireSession(request, env);
-
-    if (!env.UPLOADS) {
-      throw new HttpError(503, '图片存储未绑定：请在 wrangler.toml 中配置 R2 或 KV 绑定 UPLOADS');
-    }
-
-    const contentType = String(request.headers.get('content-type') || '')
-      .split(';')[0]
-      .trim()
-      .toLowerCase();
-    const bytes = await readBytes(request, MAX_UPLOAD_BYTES);
-
-    const detected = detectImage(bytes);
-    if (!detected) throw new HttpError(415, '只支持 PNG、JPG、WebP 或 GIF 图片');
-    if (
-      contentType &&
-      contentType !== detected.mime &&
-      !(contentType === 'image/jpg' && detected.mime === 'image/jpeg')
-    ) {
-      throw new HttpError(415, '图片格式与文件内容不一致');
-    }
-
-    const filename = `${Date.now().toString(36)}-${randomToken(6).replace(
-      /[^a-zA-Z0-9]/g,
-      ''
-    )}.${detected.ext}`;
-
-    await env.UPLOADS.put(filename, bytes, {
-      httpMetadata: {
-        contentType: detected.mime,
-        cacheControl: 'public, max-age=31536000, immutable'
-      }
-    });
-
-    return json(201, { ok: true, url: `/uploads/${filename}` });
-  }
-
   // ---- admin --------------------------------------------------------------
   if (!seg[1] || seg[0] !== 'api' || seg[1] !== 'admin') {
     throw new HttpError(404, '接口不存在');
@@ -826,30 +780,4 @@ async function moveItem(env, table, id, direction) {
 
   const update = db(env).prepare(`UPDATE ${table} SET sort = ? WHERE id = ?`);
   await db(env).batch(rows.map((row, i) => update.bind((i + 1) * 10, row.id)));
-}
-
-function detectImage(bytes) {
-  if (!bytes || bytes.length < 12) return null;
-  if (bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47) {
-    return { mime: 'image/png', ext: 'png' };
-  }
-  if (bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff) {
-    return { mime: 'image/jpeg', ext: 'jpg' };
-  }
-  if (bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46) {
-    return { mime: 'image/gif', ext: 'gif' };
-  }
-  if (
-    bytes[0] === 0x52 &&
-    bytes[1] === 0x49 &&
-    bytes[2] === 0x46 &&
-    bytes[3] === 0x46 &&
-    bytes[8] === 0x57 &&
-    bytes[9] === 0x45 &&
-    bytes[10] === 0x42 &&
-    bytes[11] === 0x50
-  ) {
-    return { mime: 'image/webp', ext: 'webp' };
-  }
-  return null;
 }

@@ -2,7 +2,7 @@
   "name": "yudian-portfolio",
   "version": "2.0.0",
   "private": true,
-  "description": "于典的个人网站 —— 深色星空主题，Cloudflare Workers + D1 + R2",
+  "description": "于典的个人网站 —— 深色星空主题，Cloudflare Workers + D1",
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",

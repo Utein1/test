@@ -4,8 +4,12 @@
 
 const encoder = new TextEncoder();
 
-/** PBKDF2 rounds. Lower this if you hit the free plan CPU limit on login. */
-const PBKDF2_ITERATIONS = 100_000;
+/**
+ * PBKDF2 rounds. Kept low enough to stay inside the 10 ms CPU budget of the
+ * Workers Free plan (login is rate limited to 8 attempts / 10 minutes, so the
+ * lower round count does not weaken the admin password meaningfully).
+ */
+const PBKDF2_ITERATIONS = 25_000;
 const KEY_BYTES = 32;
 const SALT_BYTES = 16;
 

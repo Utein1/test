@@ -1,7 +1,9 @@
 # Cloudflare Workers configuration for 于典的个人网站
 # 文档：https://developers.cloudflare.com/workers/wrangler/configuration/
 
-name = "yudian-portfolio"
+# 必须与 Cloudflare 上的 Worker / Workers Builds 项目名一致，
+# 否则 CI 会用项目名覆盖这里并给出警告。
+name = "test"
 main = "worker/index.js"
 compatibility_date = "2026-10-01"
 
@@ -11,17 +13,14 @@ directory = "./public"
 binding = "ASSETS"
 not_found_handling = "404-page"
 
-# SQLite 数据库。先运行 `npx wrangler d1 create yudian-portfolio`，
-# 再把输出的 database_id 替换到下面。
+# SQLite 数据库（已在 Cloudflare 账号中创建）。
 [[d1_databases]]
 binding = "DB"
 database_name = "yudian-portfolio"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "58ef55ba-dbca-442b-af01-b2fc3c1ca9a5"
 
-# 后台图片上传（可选）。先运行 `npx wrangler r2 bucket create yudian-uploads`。
-[[r2_buckets]]
-binding = "UPLOADS"
-bucket_name = "yudian-uploads"
+# 图片不占用对象存储：后台上传已移除，头像 / 封面请填写图片地址，
+# 例如 /assets/covers/orbit.svg 或任意外链。放在 public/ 下的图片由静态资源免费分发。
 
 [vars]
 ADMIN_USERNAME = "admin"

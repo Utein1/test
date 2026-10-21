@@ -10,8 +10,6 @@ const SECURITY_HEADERS = {
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()'
 };
 
-const UPLOAD_PATTERN = /^[a-z0-9-]+\.(png|jpe?g|webp|gif)$/i;
-
 function flat(text, status, headers = {}) {
   return new Response(text, {
     status,
@@ -49,30 +47,6 @@ async function notFound(request, env) {
   return secure(new Response(response.body, { status: 404, headers }));
 }
 
-async function serveUpload(request, env, url) {
-  if (request.method !== 'GET' && request.method !== 'HEAD') {
-    return secure(flat('Method Not Allowed', 405, { Allow: 'GET, HEAD' }));
-  }
-  if (!env.UPLOADS || typeof env.UPLOADS.get !== 'function') {
-    return secure(flat('图片存储未配置（R2 绑定 UPLOADS）', 503));
-  }
-
-  const name = url.pathname.slice('/uploads/'.length);
-  if (!UPLOAD_PATTERN.test(name)) {
-    return notFound(request, env);
-  }
-
-  const object = await env.UPLOADS.get(name);
-  if (!object) return notFound(request, env);
-
-  const headers = new Headers({
-    'Content-Type': object.httpMetadata?.contentType || 'application/octet-stream',
-    'Cache-Control': 'public, max-age=31536000, immutable'
-  });
-  if (object.httpEtag) headers.set('ETag', object.httpEtag);
-  return secure(new Response(object.body, { headers }));
-}
-
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -94,10 +68,6 @@ export default {
         );
       }
       return secure(await handleApi(request, env, url));
-    }
-
-    if (pathname.startsWith('/uploads/')) {
-      return serveUpload(request, env, url);
     }
 
     if (request.method !== 'GET' && request.method !== 'HEAD') {

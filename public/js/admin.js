@@ -706,57 +706,6 @@ function renderMessages() {
 }
 
 // ---------------------------------------------------------------------------
-// Uploads
-// ---------------------------------------------------------------------------
-async function uploadImage(file) {
-  if (!file) return null;
-  if (file.size > 8 * 1024 * 1024) throw new Error('图片不能超过 8MB');
-  if (!/^image\/(png|jpeg|webp|gif)$/i.test(file.type)) {
-    throw new Error('只支持 PNG、JPG、WebP 或 GIF 图片');
-  }
-  const response = await fetch('/api/upload', {
-    method: 'POST',
-    headers: { 'Content-Type': file.type },
-    body: file
-  });
-  const payload = await response.json().catch(() => ({}));
-  if (response.status === 401) {
-    showLogin();
-    throw new Error('登录状态已失效，请重新登录');
-  }
-  if (!response.ok) throw new Error(payload.error || '图片上传失败');
-  return payload.url;
-}
-
-function bindUpload({ buttonId, inputId, urlField, preview, onChange }) {
-  const button = $(`#${buttonId}`);
-  const input = $(`#${inputId}`);
-  if (!button || !input || !urlField) return;
-
-  button.addEventListener('click', () => input.click());
-  input.addEventListener('change', async () => {
-    const file = input.files?.[0];
-    if (!file) return;
-    const original = button.innerHTML;
-    button.disabled = true;
-    button.textContent = '上传中…';
-    try {
-      const url = await uploadImage(file);
-      urlField.value = url;
-      if (preview) onChange?.(url);
-      else onChange?.(url);
-      toast('图片上传成功');
-    } catch (error) {
-      toast(error.message, 'error');
-    } finally {
-      button.disabled = false;
-      button.innerHTML = original;
-      input.value = '';
-    }
-  });
-}
-
-// ---------------------------------------------------------------------------
 // Event wiring
 // ---------------------------------------------------------------------------
 function initDialogs() {
@@ -810,14 +759,6 @@ function initProfile() {
   form?.addEventListener('submit', saveProfile);
   $('#addSocialBtn')?.addEventListener('click', () => addSocialRow());
 
-  bindUpload({
-    buttonId: 'avatarUploadBtn',
-    inputId: 'avatarFile',
-    urlField: $('#avatarUrl'),
-    preview: $('#avatarPreview'),
-    onChange: updateAvatarPreview
-  });
-
   field(form, 'avatar_url')?.addEventListener('input', (event) => {
     updateAvatarPreview(event.target.value);
   });
@@ -868,13 +809,6 @@ function initProjects() {
   $('#addProjectBtn')?.addEventListener('click', () => openProjectDialog());
   $('#projectForm')?.addEventListener('submit', submitProject);
 
-  bindUpload({
-    buttonId: 'projectCoverBtn',
-    inputId: 'projectCoverFile',
-    urlField: $('#projectCoverUrl'),
-    preview: $('#projectCoverPreview'),
-    onChange: (url) => updateCoverPreview($('#projectCoverPreview'), url)
-  });
   $('#projectCoverUrl')?.addEventListener('input', (event) => {
     updateCoverPreview($('#projectCoverPreview'), event.target.value);
   });
@@ -922,13 +856,6 @@ function initPosts() {
     button.addEventListener('click', () => switchEditorTab(button.dataset.editorTab));
   });
 
-  bindUpload({
-    buttonId: 'postCoverBtn',
-    inputId: 'postCoverFile',
-    urlField: $('#postCoverUrl'),
-    preview: $('#postCoverPreview'),
-    onChange: (url) => updateCoverPreview($('#postCoverPreview'), url)
-  });
   $('#postCoverUrl')?.addEventListener('input', (event) => {
     updateCoverPreview($('#postCoverPreview'), event.target.value);
   });

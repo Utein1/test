@@ -220,11 +220,7 @@
                 </div>
                 <div class="avatar-editor-info">
                   <p class="field-title">头像</p>
-                  <p class="field-help">建议使用正方形图片，支持 PNG / JPG / WebP / GIF，最大 8MB。</p>
-                  <div class="inline-actions">
-                    <button class="btn btn-small btn-ghost" type="button" id="avatarUploadBtn">上传图片</button>
-                    <input type="file" id="avatarFile" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
-                  </div>
+                  <p class="field-help">填写图片地址。可以把正方形图片放进 public/assets/ 后填写 /assets/xxx.svg，也可以使用任意 https 外链。</p>
                 </div>
               </div>
 
@@ -251,7 +247,7 @@
                 </label>
                 <label class="form-field">
                   <span>简历链接 <em>选填</em></span>
-                  <input name="resume_url" type="text" maxlength="600" placeholder="https://… 或 /uploads/…">
+                  <input name="resume_url" type="text" maxlength="600" placeholder="https://… 或 /assets/…">
                 </label>
                 <label class="form-field form-field--full">
                   <span>一句话介绍</span>
@@ -396,7 +392,7 @@
                 </div>
               </header>
               <a class="btn btn-ghost" href="/api/admin/export" download>下载数据备份</a>
-              <p class="field-help">数据保存在 Cloudflare D1，上传的图片保存在 R2 存储桶。</p>
+              <p class="field-help">内容保存在 Cloudflare D1；头像与封面填写图片地址，不使用对象存储。</p>
             </article>
           </div>
         </section>
@@ -472,8 +468,6 @@
               <div class="cover-preview" id="projectCoverPreview"></div>
               <div class="cover-fields">
                 <input name="cover_url" id="projectCoverUrl" type="text" maxlength="600" placeholder="/assets/covers/orbit.svg 或粘贴图片地址">
-                <button class="btn btn-small btn-ghost" type="button" id="projectCoverBtn">上传图片</button>
-                <input type="file" id="projectCoverFile" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
               </div>
             </div>
           </div>
@@ -537,9 +531,7 @@
             <div class="cover-editor">
               <div class="cover-preview" id="postCoverPreview"></div>
               <div class="cover-fields">
-                <input name="cover_url" id="postCoverUrl" type="text" maxlength="600" placeholder="粘贴图片地址或上传">
-                <button class="btn btn-small btn-ghost" type="button" id="postCoverBtn">上传图片</button>
-                <input type="file" id="postCoverFile" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+                <input name="cover_url" id="postCoverUrl" type="text" maxlength="600" placeholder="/assets/covers/orbit.svg 或粘贴图片地址">
               </div>
             </div>
           </div>
